@@ -1,10 +1,24 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public class hangman 
 {
-    String word;
-    String[] letters;
+    private String word;
+    private String[] letters;
+    private String[] answer;
+    
+    hangman()
+    {
+        word = "test";
+        letters = word.split("");
+        answer = new String[word.length()];
+        for(String a: answer)
+        {
+            a="_";
+        }
+    }
+
     private boolean guess_letter(String x)
     {
         for( String n : letters)
@@ -42,9 +56,41 @@ public class hangman
         return locations;
     }
 
+    @Override
+    public String toString()
+    {
+        return answer.toString();
+    }
+
+    
+
     public static void main(String args[])
     {
+        hangman game = new hangman();
+        Scanner scan = new Scanner(System.in);
+        String guess;
+        while(true)
+        {   
+            System.out.println("Enter your Guess: ");
+            guess = scan.nextLine();
+            if( guess.equals("quit"))
+            {
+                break;
+            }
+            else if(guess.length()<1)
+            {
+                game.guess_word(guess);
+            }
+            else
+            {
+                game.guess_letter(guess);
+            }
+            System.out.println(game);
+            
+        }
 
+
+        scan.close();
     }
     
 }
