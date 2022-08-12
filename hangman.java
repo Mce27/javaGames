@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.List;
+
 public class hangman 
 {
     String word;
@@ -25,6 +28,20 @@ public class hangman
             return false;
         }
     }
+
+    private List<Integer> letter_location(String letter)
+    {
+        List<Integer> locations =new LinkedList<>();
+        for(int i = 0; i<letters.length;i++)
+        {
+            if(letters[i].equals(letter))
+            {
+                locations.add(i);
+            }
+        }
+        return locations;
+    }
+
     public static void main(String args[])
     {
 
