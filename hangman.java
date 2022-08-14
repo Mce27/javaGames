@@ -79,11 +79,20 @@ public class hangman
             }
             else if(guess.length()<1)
             {
-                game.guess_word(guess);
+                if(game.guess_word(guess))
+                {
+                    game.answer = game.word;
+                }
             }
             else
             {
-                game.guess_letter(guess);
+                if(game.guess_letter(guess))
+                {
+                    for(Integer n : game.letter_location(guess))
+                    {
+                        game.answer[n] = game.word[n];
+                    }
+                }
             }
             System.out.println(game);
             
