@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -59,7 +60,19 @@ public class hangman
     @Override
     public String toString()
     {
-        return answer.toString();
+       return Arrays.toString(answer);
+    }
+    
+    private boolean game_over() //this dont work
+    {
+        for(int i=0;i<letters.length-1;i++)
+        {
+            if(!answer[i].equals(letters[i]))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     
@@ -81,7 +94,7 @@ public class hangman
             {
                 if(game.guess_word(guess))
                 {
-                    game.answer = game.word;
+                    game.answer = game.word.split("");
                 }
             }
             else
@@ -90,11 +103,16 @@ public class hangman
                 {
                     for(Integer n : game.letter_location(guess))
                     {
-                        game.answer[n] = game.word[n];
+                        game.answer[n] = game.word.split("")[n];
                     }
                 }
             }
-            System.out.println(game);
+            if(game.game_over())
+            {
+                System.out.println("You win!");
+                break;
+            }
+            System.out.println(game.toString());
             
         }
 
