@@ -8,6 +8,9 @@ public class hangman
     private String word;
     private String[] letters;
     private String[] answer;
+    private int answercount;
+    private int wordcount;
+    private boolean GAMEOVER;
     
     hangman()
     {
@@ -18,6 +21,9 @@ public class hangman
         {
             a="_";
         }
+        answercount=0;
+        wordcount=letters.length;
+        GAMEOVER=false;
     }
 
     private boolean guess_letter(String x)
@@ -36,6 +42,7 @@ public class hangman
     {
         if(word.equals(guess))
         {
+            GAMEOVER= true;
             return true;
         }
         else
@@ -63,16 +70,15 @@ public class hangman
        return Arrays.toString(answer);
     }
     
-    private boolean game_over() //this dont work
+    private boolean game_over() 
     {
-        for(int i=0;i<letters.length-1;i++)
+        
+        if(answercount==wordcount || GAMEOVER==true)
         {
-            if(!answer[i].equals(letters[i]))
-            {
-                return false;
-            }
+            return true;
         }
-        return true;
+        
+        return false;
     }
 
     
@@ -90,7 +96,7 @@ public class hangman
             {
                 break;
             }
-            else if(guess.length()<1)
+            else if(guess.length()>1)
             {
                 if(game.guess_word(guess))
                 {
@@ -104,12 +110,14 @@ public class hangman
                     for(Integer n : game.letter_location(guess))
                     {
                         game.answer[n] = game.word.split("")[n];
+                        game.answercount++;
                     }
                 }
             }
             if(game.game_over())
             {
-                System.out.println("You win!");
+                System.out.println(game.toString());
+                System.out.println("You win! \nThe word was "+game.word+"!");
                 break;
             }
             System.out.println(game.toString());
