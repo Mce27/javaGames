@@ -14,9 +14,29 @@ public class hangman
     private int answercount;
     private int wordcount;
     private boolean GAMEOVER;
+    private int WrongCount;
     
+    private static String NoneWrong = "_____\n|   |\n|   \n|  \n|";
+    private static String OneWrong= "_____\n|   |\n|   O\n|  \n|";
+    private static String TwoWrong= "_____\n|   |\n|   O\n|   |\n|";
+    private static String ThreeWrong= "_____\n|   |\n|   O\n|  /|\n|";
+    private static String FourWrong= "_____\n|   |\n|   O\n|  /|/\n|";
+    private static String FiveWrong= "_____\n|   |\n|   O\n|  /|/\n|  /";
+    private static String SixWrong = "_____\n|   |\n|   O\n|  /|/\n|  // ";
+    private static String[] WrongImg= new String[7];
+    
+ 
+
     hangman()
     {
+        WrongImg[0] = NoneWrong;
+        WrongImg[1] = OneWrong;
+        WrongImg[2] = TwoWrong;
+        WrongImg[3] = ThreeWrong;
+        WrongImg[4] = FourWrong;
+        WrongImg[5] = FiveWrong;
+        WrongImg[6] = SixWrong;
+
         word = get_word();
         letters = word.split("");
         answer = new String[word.length()];
@@ -27,6 +47,7 @@ public class hangman
         answercount=0;
         wordcount=letters.length;
         GAMEOVER=false;
+        WrongCount=0;
     }
 
     private String get_word()
@@ -58,6 +79,7 @@ public class hangman
                 return true;
             }
         }
+        WrongCount++;
         return false;
     }
     
@@ -70,6 +92,7 @@ public class hangman
         }
         else
         {
+            WrongCount++;
             return false;
         }
     }
@@ -90,7 +113,7 @@ public class hangman
     @Override
     public String toString()
     {
-       return Arrays.toString(answer);
+       return WrongImg[WrongCount]+"\n"+ Arrays.toString(answer) ;
     }
     
     private boolean game_over() 
@@ -98,6 +121,14 @@ public class hangman
         
         if(answercount==wordcount || GAMEOVER==true)
         {
+            System.out.println(toString());
+            System.out.println("You win! \nThe word was "+word+"!");
+            return true;
+        }
+        else if(WrongCount ==6)
+        {
+            System.out.println(toString());
+            System.out.println("You lost :(\nThe word was "+word+ "\nTry again?");
             return true;
         }
         
@@ -139,8 +170,7 @@ public class hangman
             }
             if(game.game_over())
             {
-                System.out.println(game.toString());
-                System.out.println("You win! \nThe word was "+game.word+"!");
+                
                 break;
             }
             System.out.println(game.toString());
