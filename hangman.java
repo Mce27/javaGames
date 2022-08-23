@@ -1,6 +1,9 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class hangman 
@@ -14,7 +17,7 @@ public class hangman
     
     hangman()
     {
-        word = "test";
+        word = get_word();
         letters = word.split("");
         answer = new String[word.length()];
         for(String a: answer)
@@ -24,6 +27,26 @@ public class hangman
         answercount=0;
         wordcount=letters.length;
         GAMEOVER=false;
+    }
+
+    private String get_word()
+    {
+        Random rand = new Random();
+        try 
+        {
+            Scanner scan = new Scanner(new File("./dictionary.txt"));
+            String out= "";
+            int target = rand.nextInt(1,69903);
+            for (int i =0;i<target-1;i++)
+            {
+                out = scan.nextLine();
+            }
+            return out;
+            
+        } 
+        catch (FileNotFoundException e) 
+        {/*watermelon*/ } 
+        return "poop";      
     }
 
     private boolean guess_letter(String x)
